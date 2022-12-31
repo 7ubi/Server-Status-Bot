@@ -17,17 +17,6 @@ async def on_ready():
 
   server_status_channel = client.get_channel(1058740765636968500)
   print(server_status_channel)
-  await server_status_channel.send(file=discord.File('online.png'))
-
-# @client.event
-# async def on_message(message):
-#   if message.author == client.user:
-#     return
-
-#   print(message.content)
-#   if message.content.startswith('$bitch'):
-#     print(message)
-#     await message.channel.send('Was geht bitch')
-
+  await server_status_channel.send(file=discord.File('online.gif'))
 
 client.run(os.getenv('TOKEN'))

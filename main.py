@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 import discord
-import json
 
 load_dotenv()
 
@@ -17,6 +16,6 @@ async def on_ready():
 
     server_status_channel = client.get_channel(1058740765636968500)
 
-    await server_status_channel.send(file=discord.File('online.gif'))
+    await server_status_channel.send("@everyone", file=discord.File('online.gif'))
 
 client.run(os.getenv('TOKEN'))

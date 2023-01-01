@@ -16,9 +16,9 @@ async def on_ready():
 
     server_status_channel = client.get_channel(1058740765636968500)
 
-    await server_status_channel.send(file=discord.File('down.gif'))
+    await server_status_channel.send("@everyone", file=discord.File('down.gif'))
 
-    os.system("shutdown /s /t 1")
+    os.system("shutdown now")
 
 
 client.run(os.getenv('TOKEN'))

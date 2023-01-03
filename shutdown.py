@@ -14,7 +14,7 @@ client = discord.Client(intents=intents)
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
-    server_status_channel = client.get_channel(1058740765636968500)
+    server_status_channel = client.get_channel(os.getenv('CHANNEL'))
 
     await server_status_channel.send("@everyone", file=discord.File('down.gif'))
 

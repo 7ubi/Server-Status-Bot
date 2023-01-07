@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import discord
 import sys
 import re
+import datetime
+import time
 
 load_dotenv()
 
@@ -18,9 +20,10 @@ async def on_ready():
 
     server_status_channel = client.get_channel(int(os.getenv('CHANNEL')))
 
-    await server_status_channel.send(file=discord.File('down.gif'))
     
     if len(sys.argv) == 1:
+        await server_status_channel.send(file=discord.File('down.gif'))
+    
         os.system("shutdown now")
     elif len(sys.argv) == 2:
         time = sys.argv[1]
@@ -29,6 +32,14 @@ async def on_ready():
 
         if match:
             os.system("shutdown {0}".format(sys.argv[1]))
+
+            now = datetime.datetime.now()
+            time_str = now.strftime('%H:%M')
+
+            while time_str != time:
+                time.sleep(1)
+
+            await server_status_channel.send(file=discord.File('down.gif'))
         else:
             print("ERROR: Wrong time format, please use: HH:MM")
     else:

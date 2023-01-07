@@ -13,6 +13,11 @@ intents.message_content = True
 
 client = discord.Client(intents=intents)
 
+def isTimeNow(time):
+    now = datetime.datetime.now()
+    time_str = now.strftime('%H:%M')
+
+    return time_str == time
 
 @client.event
 async def on_ready():
@@ -26,19 +31,16 @@ async def on_ready():
     
         os.system("shutdown now")
     elif len(sys.argv) == 2:
-        time = sys.argv[1]
+        shutdownTime = sys.argv[1]
 
-        match = re.search(r'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$', time)
+        match = re.search(r'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$', shutdownTime)
 
         if match:
             os.system("shutdown {0}".format(sys.argv[1]))
 
-            now = datetime.datetime.now()
-            time_str = now.strftime('%H:%M')
-
-            while time_str != time:
+            while not isTimeNow(shutdownTime):
                 time.sleep(1)
-
+                
             await server_status_channel.send(file=discord.File('down.gif'))
         else:
             print("ERROR: Wrong time format, please use: HH:MM")

@@ -14,7 +14,7 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 def isTimeNow(time):
-    now = datetime.datetime.now()
+    now = datetime.datetime.now() + datetime.timedelta(seconds=30)
     time_str = now.strftime('%H:%M')
 
     return time_str == time
@@ -36,7 +36,7 @@ async def on_ready():
         match = re.search(r'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$', shutdownTime)
 
         if match:
-            os.system("shutdown {0}:30".format(sys.argv[1]))
+            os.system("shutdown {0}".format(sys.argv[1]))
 
             while not isTimeNow(shutdownTime):
                 time.sleep(1)

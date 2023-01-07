@@ -14,7 +14,7 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 def isTimeNow(time):
-    now = datetime.datetime.now() + datetime.timedelta(seconds=30)
+    now = datetime.datetime.now() + datetime.timedelta(seconds=5)
     time_str = now.strftime('%H:%M')
 
     return time_str == time

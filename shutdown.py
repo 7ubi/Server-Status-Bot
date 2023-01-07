@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 import discord
+import sys
+import re
 
 load_dotenv()
 
@@ -14,11 +16,24 @@ client = discord.Client(intents=intents)
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
-    server_status_channel = client.get_channel(os.getenv('CHANNEL'))
+    server_status_channel = client.get_channel(int(os.getenv('CHANNEL')))
 
-    await server_status_channel.send("@everyone", file=discord.File('down.gif'))
+    await server_status_channel.send(file=discord.File('down.gif'))
+    
+    if len(sys.argv) == 1:
+        os.system("shutdown now")
+    elif len(sys.argv) == 2:
+        time = sys.argv[1]
 
-    os.system("shutdown now")
+        match = re.search(r'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$', time)
+
+        if match:
+            os.system("shutdown {0}".format(sys.argv[1]))
+        else:
+            print("ERROR: Wrong time format, please use: HH:MM")
+    else:
+        print('ERROR: Wrong number of arguments')
+
 
 
 client.run(os.getenv('TOKEN'))
